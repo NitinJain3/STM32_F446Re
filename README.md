@@ -1,4 +1,7 @@
-# STM32 F446RE Project
+# STM32 F446RE Projects
+---
+![Board](https://img.shields.io/badge/board-NucleoF446RE-blue)
+![Board](https://img.shields.io/badge/Microcontroller-STM32F446RE-blue)
 
 This repository contains the STM32F446RE project for educational and learning.
 
@@ -8,4 +11,4 @@ This repository contains the STM32F446RE project for educational and learning.
 
 ## Author
 
-Nitin R
+[Nitin R](https://www.linkedin.com/in/nitin-r-9733n)
