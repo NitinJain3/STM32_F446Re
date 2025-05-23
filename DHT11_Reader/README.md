@@ -18,7 +18,7 @@ This project demonstrates how to interface a DHT11 temperature and humidity sens
 # Board
 ![IMG_20250524_011214305~2](https://github.com/user-attachments/assets/a72b5bb7-3722-4016-9690-0af65d2477d1)
 
-
+---
 
 ## Features
 
