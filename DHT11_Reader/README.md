@@ -71,4 +71,6 @@ Example usage:
 DEBUG_INFO("DHT11 Initialized\r\n");
 DEBUG_PRINT("Temperature: %d.%d °C\r\n", t_int, t_dec);
 
+Output
+![image](https://github.com/user-attachments/assets/48118d0c-79cf-453c-8c07-45b055bd7217)
 
