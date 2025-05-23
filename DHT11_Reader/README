@@ -1,0 +1,74 @@
+DHT11 Reader for STM32_F446RE
+
+This project demonstrates how to interface a DHT11 temperature and humidity sensor with an STM32F446RE Nucleo board using STM32 HAL drivers.
+
+Features
+- Reads humidity and temperature from DHT11 sensor
+- Validates sensor data using checksum
+- Outputs data to UART using redirected `printf`
+- Microsecond-level delay implemented using DWT (Data Watchpoint and Trace Unit)
+- LED toggle to indicate successful data reception
+
+DHT11 Timing Overview
+
+DHT11 uses a single-wire protocol for communication and has strict timing requirements:
+
+MCU Start Signal: LOW for ≥18 ms, HIGH for 20–40 µs
+Sensor Response: LOW 80 µs, HIGH 80 µs
+Data Transmission (40 bits total):
+  - Each bit starts with a 50 µs LOW pulse
+  - A `0` is represented by a 26–28 µs HIGH pulse
+  - A `1` is represented by a 70 µs HIGH pulse
+
+Accurate microsecond delays are required to distinguish bits. This is achieved using DWT-based delay (Data Watchpoint and Trace Unit)
+
+Response Signal (DHT11 → MCU): DHT11 pulls line LOW for **80 µs**, then HIGH for **80 µs**
+
+Precision delay in microseconds is mandatory for:
+- Detecting bit `1` vs `0`
+- Correctly reading the data frame
+- Handling sensor response timing
+
+This project uses **DWT-based delay** (`DWT->CYCCNT`) to achieve accurate microsecond delays needed for bit reading.
+
+Tools Used
+1.STM32CubeMX + STM32CubeIDE
+2.STM32 HAL drivers
+3.NUCLEO-F446RE board
+4.DHT11 temperature and humidity sensor
+5.Docklight / PuTTY / Arduino Serial Monitor for viewing logs
+
+Project Folder Structure
+
+STM32_F446Re/
+├── dht11_reader/
+│ ├── Core/
+│ │ ├── Src/
+│ │ │ ├── dht11.c
+│ │ │ ├── main.c
+│ │ │ └── ...
+│ │ ├── Inc/
+│ │ │ ├── dht11.h
+│ │ │ └── ...
+│ └── README.md
+
+
+Debug Logging (`debug.h`)
+
+This project includes a lightweight debug interface through `debug.h`, which uses macro-based logging levels:
+
+// debug.h
+#define DEBUG_INFO(fmt, ...)   printf("INFO: " fmt, ##__VA_ARGS__)
+#define DEBUG_PRINT(fmt, ...)  printf("DEBUG: " fmt, ##__VA_ARGS__)
+#define DEBUG_ERROR(fmt, ...)  printf("ERROR: " fmt, ##__VA_ARGS__)
+
+These macros make it easy to:
+Separate different log types (info/debug/error)
+Enable or disable logs quickly (by commenting out macros)
+Keep main.c or other modules clean and consistent
+
+Example usage:
+DEBUG_INFO("DHT11 Initialized\r\n");
+DEBUG_PRINT("Temperature: %d.%d °C\r\n", t_int, t_dec);
+
+
